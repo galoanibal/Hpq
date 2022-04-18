@@ -1,0 +1,141 @@
+﻿@{
+    this.ViewBag.Title = "Movimientos";
+}
+<title>@ViewBag.Title</title>
+<script src="~/js/Banco/Movimientos.js"></script>
+
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-12 p-0 m-0">
+        <div class="card">
+            <div class="card-header">
+                <strong class="card-title">@ViewBag.Title</strong>
+            </div>
+
+            <div class="card-body">
+                <main role="main" class="container">
+                   
+                    <div class="row" style="background-color:gainsboro">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                            Filtrar por Rango de Fecha                           
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label for="exampleFormControlInput1">Fecha Desde</label>
+                                <input type="date" class="form-control" id="txtFechaDesde" autocomplete="off" placeholder="FechaDesde" value="@DateTime.Now.ToString("yyyy-MM-dd")">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label for="exampleFormControlInput1">Fecha Hasta</label>
+                                <input type="date" class="form-control" id="txtFechaHasta" autocomplete="off" placeholder="Fecha Hasta" value="@DateTime.Now.ToString("yyyy-MM-dd")">
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-2 col-sm-3 col-12">
+                            <div class="form-group">
+                                <label for="exampleFormControlInput1">Buscar</label>
+                                <button type="button" class="form-control btn btn-outline-primary dx-icon-search" onclick="Listar()"></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br />
+                    <div class="row" style="background-color:gainsboro">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                            Generar Movimiento
+                        </div>
+                        <input type="number" id="txtIdMovimiento" hidden>
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label for="exampleFormControlInput1">Cuenta</label>
+                                <select name="select" id="selectCuenta" class="form-control Buscar">                                   
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label for="exampleFormControlInput1">Fecha</label>
+                                <input type="date" class="form-control" id="txtFecha" autocomplete="off" placeholder="Fecha" value="@DateTime.Now.ToString("yyyy-MM-dd")">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4  col-sm-4 col-12">
+                            <div class="form-group">
+                                <label for="exampleFormControlInput1">Tipo</label>
+                                <select name="select" id="selectTipo" class="form-control">
+                                    <option value="0">Seleccione...</option>
+                                    <option value="Credito">Crédito</option>
+                                    <option value="Debito">Debito</option>
+                                </select>
+                            </div> 
+                        </div>
+                        <div class="col-lg-4 col-md-4  col-sm-4 col-12">
+                            <div class="form-group">
+                                <label for="exampleFormControlInput1">Valor</label>
+                                <input type="number" class="form-control" id="txtValor" autocomplete="off" placeholder="0.00"  pattern="[0-9]+([\.,][0-9]+)?" step="0.01" min="0" max="1000000">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-2 col-md-2 col-sm-3 col-12 d-flex justify-content-center flex-nowrap ">
+                            <div class="form-group">
+                                <label for="exampleFormControlInput1">Opción</label>
+                                <button type="button" class="form-control btn btn-outline-success dx-icon-save" onclick="Guardar()"></button>
+                            </div>
+                        </div>
+                    </div>
+                  <br />
+                    <div class="row" >
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-12  p-0 m-0">
+                            @(Html.DevExtreme().DataGrid()
+                                .ID("gridMovimientos")
+                                .Selection(x=>x.Mode(SelectionMode.Single))
+                                .KeyExpr("idMovimiento")
+                                .ShowBorders(true)
+                                .Columns(columns =>
+                                {
+                                    columns.Add().Caption("IdMovimiento").DataField("idMovimiento").Visible(false);
+                                    columns.Add().Caption("Fecha").DataField("fecha").Visible(true);
+                                    columns.Add().Caption("Tipo").DataField("tipo");
+                                    columns.Add().Caption("VAlor").DataField("valor");
+                                })
+                                 .AllowColumnReordering(true)
+                                .AllowColumnResizing(false)
+                                )
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style type="text/css">
+    .colorTable {
+        background-color: #d8e4bc;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    td {
+        padding: 2px;
+        border-color: black;
+        border: solid 1px;
+    }
+
+    .dx-datagrid {
+        padding-left: 0;
+        padding-right: 0;
+        padding-bottom: 5px;
+    }
+
+    [role=columnheader] {
+        background-color: #a7be74;
+    }
+
+    [role=presentation] {
+        color: black !important;
+        border-color: black !important;
+        color: black !important;
+    }
+
+    #btnRegresar {
+    }
+</style>

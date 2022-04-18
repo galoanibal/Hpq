@@ -1,0 +1,7 @@
+docker build -f .\PRUEBA.QPH.API\Dockerfile -t webapiqph .
+
+Crear la img docker y asignarle el puerto 80
+docker run -it -p 80:80 -d webapiqph 
+
+
+--Para pobar el postman se debe cambiar el locahost con la ip que se le asigne al servicio en docker

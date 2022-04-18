@@ -1,0 +1,105 @@
+﻿@{
+    this.ViewBag.Title = "Cuentas";
+}
+<title>@ViewBag.Title</title>
+<script src="~/js/Banco/Cuentas.js"></script>
+
+
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-12 p-0 m-0">
+        <div class="card">
+            <div class="card-header">
+                <strong class="card-title">@ViewBag.Title</strong>
+            </div>
+
+            <div class="card-body">
+                <main role="main" class="container">
+                    <div class="row">
+                        <input type="number" id="txtIdCuenta" hidden>
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label for="exampleFormControlInput1">Numéro Cuenta</label>
+                                <input type="text" class="form-control" id="txtNumeroCuenta" autocomplete="off" placeholder="Numéro Cuenta">
+                            </div>
+                        </div>
+
+                        <div class="col-lg-4 col-md-4  col-sm-4 col-12">
+                            <div class="form-group">
+                                <label for="exampleFormControlInput1">Saldo</label>
+                                <input type="number" class="form-control" id="txtSaldo" autocomplete="off" placeholder="0.00">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-12 d-flex justify-content-center flex-nowrap ">
+                            <div class="form-group">
+                                <button type="button" class="btn btn-outline-success" onclick="Guardar()">Guardar</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-12 ">
+                            @(Html.DevExtreme().DataGrid()
+                                .ID("gridCuentas")
+                                .Selection(x=>x.Mode(SelectionMode.Single))
+                                .KeyExpr("idCuenta")
+                                .ShowBorders(true)
+                                .Columns(columns =>
+                                {
+                                    columns.Add().Caption("IdCuenta").DataField("idCuenta").Visible(false);
+                                    columns.Add().Caption("IdCliente").DataField("idCliente").Visible(true);
+                                    columns.Add().Caption("Numero de Cuenta ").DataField("numeroCuenta");
+                                    columns.Add().Caption("Saldo").DataField("saldo");
+                                    columns.Add()
+                                               .Caption("Opciones")
+                                               .Type(GridCommandColumnType.Buttons)
+                                               .Width(110)
+                                               .Buttons(b =>
+                                               {
+                                                   b.Add().Name(GridColumnButtonName.Edit).Icon("edit").Hint("Editar").Name("btnEditar").OnClick("Editar");
+                                                   b.Add().Name(GridColumnButtonName.Delete).Icon("trash").Hint("Eliminar").Name("btnEliminar").OnClick("Eliminar");
+                                               });
+                                })
+                                 .AllowColumnReordering(true)
+                                .AllowColumnResizing(false)
+                                )
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style type="text/css">
+    .colorTable {
+        background-color: #d8e4bc;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    td {
+        padding: 2px;
+        border-color: black;
+        border: solid 1px;
+    }
+
+    .dx-datagrid {
+        padding-left: 0;
+        padding-right: 0;
+        padding-bottom: 5px;
+    }
+
+    [role=columnheader] {
+        background-color: #a7be74;
+    }
+
+    [role=presentation] {
+        color: black !important;
+        border-color: black !important;
+        color: black !important;
+    }
+
+    #btnRegresar {
+    }
+</style>
